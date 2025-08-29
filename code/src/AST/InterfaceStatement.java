@@ -10,6 +10,11 @@ public class InterfaceStatement implements Statement {
     Keyword keyword;
     InterfaceAttributes interfaceAttributes;
 
+    @Override
+    public InterfaceStatement getInterfaceStatement() {
+        return this;
+    }
+
     public String getInterface() {
         return Interface;
     }

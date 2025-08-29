@@ -5,8 +5,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-
-
 public class FunctionDuplicate {
     private static final Map<String, Integer> functionNameToFirstLine = new HashMap<>();
     public static void isFunctionDuplicate(String functionName, ParserRuleContext ctx, Stack<GlobalScope> globalStack) {

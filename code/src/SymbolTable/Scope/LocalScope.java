@@ -1,6 +1,5 @@
 package SymbolTable.Scope;
 
-
 public class LocalScope extends BaseScope {
 
     public LocalScope(Scope enclosingScope) {
@@ -13,18 +12,12 @@ public class LocalScope extends BaseScope {
         }else
             return getGlobalScope(scope.getEnclosingScope());
     }
-
-
     @Override
-    public void setId(String id) {
-
-    }
-
+    public void setId(String id) {}
     @Override
     public String getId() {
         return null;
     }
-
     @Override
     public String toQualifierString(String separator) {
         return null;

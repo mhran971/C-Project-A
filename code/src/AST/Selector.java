@@ -7,6 +7,7 @@ public class Selector {
     //STRING IMG_? selectorInternal*
     String STRING;
     List<SelectorInternal> selectorInternal=new ArrayList< SelectorInternal>();
+    String Textarea;
 
     public List<SelectorInternal> getSelectorInternal() {
         return selectorInternal;
@@ -22,6 +23,14 @@ public class Selector {
 
     public void setSTRING(String STRING) {
         this.STRING = STRING;
+    }
+
+    public String getTextarea() {
+        return Textarea;
+    }
+
+    public void setTextarea(String textarea) {
+        Textarea = textarea;
     }
 
     @Override

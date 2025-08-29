@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Angular App</title>
+<style>
+		.form-container {
+		  max-width: 400px;
+		  margin: 40px auto;
+		  display: flex;
+		  flex-direction: column;
+		  gap: 10px;
+		}
+
+		.input, textarea {
+		  padding: 8px;
+		  font-size: 14px;
+		  width: 100%;
+		}
+
+		.button {
+		  background-color: #28a745;
+		  color: white;
+		  padding: 8px;
+		  font-size: 16px;
+		  border: none;
+		  cursor: pointer;
+		}
+
+</style>
+</head>
+<body>
+<script type='module'>
+export class AddProductComponent {
+ constructor(){
+		this.product = 		{
+		id: '',
+		name: '',
+		image: '',
+		details: ''
+		}
+;}
+		addProduct() {
+		  this.product.id =document.getElementById('product.id').value;
+		  this.product.name = document.getElementById('product.name').value;
+		  this.product.image = document.getElementById('product.image').value;
+		  this.product.details =document.getElementById('product.details').value;
+		  const storedProducts = JSON.parse(localStorage.getItem('products')||'[]');
+		  storedProducts.push({ ... this.product });
+		  localStorage.setItem('products',JSON.stringify(storedProducts));
+		  window.location.href= "GeneratedProduct-page.html";
+		}}
+		const addComp = new AddProductComponent();
+window.addProduct = () => addComp.addProduct();
+</script>
+<div class='form-container'>
+<h2>
+Add
+Product
+</h2>
+<label>
+Product number
+</label>
+<input id='product.id' type='text' />
+<label>
+Product
+name
+</label>
+<input id='product.name' type='text' />
+<label>
+Image
+link
+</label>
+<input id='product.image' type='text' />
+<label>
+Description
+</label>
+<input id='product.details' type='text' />
+ <button onclick='addProduct()'>Add</button></div>
+<div id='app'></div>
+<div id='main-product'></div>
+<div class='side-products'></div>
+</body>
+</html>

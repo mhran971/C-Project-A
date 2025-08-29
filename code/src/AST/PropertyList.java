@@ -6,6 +6,7 @@ import java.util.List;
 public class PropertyList {
     //declarationName Colon STRING LeftBracket RightBracket
     //      Assign LeftBracket bodyList* RightBracket eos
+    // |declarationName Assign  bodyList* eos//////////added//////
     String STRING;
     DeclarationName declarationName;
     List<BodyList> bodyList=new ArrayList<BodyList>();
@@ -36,9 +37,15 @@ public class PropertyList {
 
     @Override
     public String toString() {
+        if(STRING!=null){
+            return '\n' +""+ declarationName +
+                    '\n' +"type=" + STRING +
+                    '\n' +"bodyList=" + bodyList +'\n'
+                    ;
+        }
         return '\n' +""+ declarationName +
-                '\n' +"type=" + STRING +
                 '\n' +"bodyList=" + bodyList +'\n'
                 ;
+
     }
 }

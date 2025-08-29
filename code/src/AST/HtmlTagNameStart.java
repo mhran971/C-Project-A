@@ -4,6 +4,7 @@ public class HtmlTagNameStart {
     TagName tagName;
     Keyword keyword;
     StringLiteral stringLiteral;
+    String Greater;
 
     public TagName getTagName() {
         return tagName;
@@ -27,6 +28,14 @@ public class HtmlTagNameStart {
 
     public void setStringLiteral(StringLiteral stringLiteral) {
         this.stringLiteral = stringLiteral;
+    }
+
+    public String getGreater() {
+        return Greater;
+    }
+
+    public void setGreater(String greater) {
+        Greater = greater;
     }
 
     @Override

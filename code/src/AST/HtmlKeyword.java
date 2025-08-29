@@ -38,6 +38,14 @@ public class HtmlKeyword {
         this.SRC = SRC;
     }
 
+    public String getName() {
+        if (NGFOR != null) return NGFOR;
+        if (NGIF != null) return NGIF;
+        if (ALT != null) return ALT;
+        if (SRC != null) return SRC;
+        return "";
+    }
+
     @Override
     public String toString() {
         if(NGFOR!=null){

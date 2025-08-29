@@ -6,13 +6,12 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class SemanticCheck {
-
     SymbolTable symbolTable= SymbolTable.getInstance();
     public static Set<String> Errors = new LinkedHashSet<>();
 
     public void checkErrors() {
         try {
-            FileWriter test = new FileWriter("Result\\Semantic.txt");
+            FileWriter test = new FileWriter("code\\Result\\Semantic.txt");
             if (!Errors.isEmpty()) {
                 symbolTable.hasSemanticError = true;
             }

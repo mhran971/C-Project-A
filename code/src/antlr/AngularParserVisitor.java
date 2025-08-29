@@ -1,4 +1,4 @@
-// Generated from E:/Fourth year/Semester2(2024-2025)/Compiler 2/ProjectCompiler2/code/src/antlr/AngularParser.g4 by ANTLR 4.13.2
+// Generated from E:/Fourth year/Semester2(2024-2025)/Compiler 2/ProjectCompiler2_git/Compiler-Project-Angular/code/src/antlr/AngularParser.g4 by ANTLR 4.13.2
 package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -258,6 +258,34 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMethodOnly(AngularParser.MethodOnlyContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code FunctionNgOnInitTable}
+	 * labeled alternative in {@link AngularParser#classBody}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionNgOnInitTable(AngularParser.FunctionNgOnInitTableContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code FunctionDeleteProduct}
+	 * labeled alternative in {@link AngularParser#classBody}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionDeleteProduct(AngularParser.FunctionDeleteProductContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ConstructorLable}
+	 * labeled alternative in {@link AngularParser#classBody}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstructorLable(AngularParser.ConstructorLableContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code FunctionAddProduct}
+	 * labeled alternative in {@link AngularParser#classBody}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionAddProduct(AngularParser.FunctionAddProductContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AngularParser#propertyList}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -317,6 +345,145 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStatementMethod(AngularParser.StatementMethodContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#functionNgOnInit}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionNgOnInit(AngularParser.FunctionNgOnInitContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#bodyNgOnInit}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBodyNgOnInit(AngularParser.BodyNgOnInitContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#ifStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStatement(AngularParser.IfStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#expressionIf}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpressionIf(AngularParser.ExpressionIfContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BlockIfJSON}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlockIfJSON(AngularParser.BlockIfJSONContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BlockIfFilter}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlockIfFilter(AngularParser.BlockIfFilterContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BlockIfElse}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlockIfElse(AngularParser.BlockIfElseContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BlockIfLocalStorage}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlockIfLocalStorage(AngularParser.BlockIfLocalStorageContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BlockIfNullLiteral}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlockIfNullLiteral(AngularParser.BlockIfNullLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BlockIfEllipsis}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlockIfEllipsis(AngularParser.BlockIfEllipsisContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BlockIfTable}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlockIfTable(AngularParser.BlockIfTableContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#contentJSON}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContentJSON(AngularParser.ContentJSONContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#contentFilter}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContentFilter(AngularParser.ContentFilterContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#filterArrow}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFilterArrow(AngularParser.FilterArrowContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#contentLocalStorage}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContentLocalStorage(AngularParser.ContentLocalStorageContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#elseStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElseStatement(AngularParser.ElseStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#contentElse}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContentElse(AngularParser.ContentElseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#functionDelete}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionDelete(AngularParser.FunctionDeleteContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#functionDeleteContent}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionDeleteContent(AngularParser.FunctionDeleteContentContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#constructor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstructor(AngularParser.ConstructorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#functionAdd}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionAdd(AngularParser.FunctionAddContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#functionAddContent}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionAddContent(AngularParser.FunctionAddContentContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ParameterTyped}
 	 * labeled alternative in {@link AngularParser#declarationString}.
@@ -389,6 +556,27 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitHtmlContentBrace(AngularParser.HtmlContentBraceContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code HtmlButton}
+	 * labeled alternative in {@link AngularParser#htmlElementContent}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitHtmlButton(AngularParser.HtmlButtonContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code DeclarationNumber}
+	 * labeled alternative in {@link AngularParser#htmlElementContent}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDeclarationNumber(AngularParser.DeclarationNumberContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code DeclarationNgModel}
+	 * labeled alternative in {@link AngularParser#htmlElementContent}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDeclarationNgModel(AngularParser.DeclarationNgModelContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code HtmlImgAttribute1}
 	 * labeled alternative in {@link AngularParser#contentHtml}.

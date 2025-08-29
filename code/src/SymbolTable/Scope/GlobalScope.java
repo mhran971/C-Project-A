@@ -1,9 +1,6 @@
 package SymbolTable.Scope;
 
-
 public class GlobalScope extends BaseScope {
-
-     // A scope associated with globals.
 
     private String globalVar;
 
@@ -20,9 +17,7 @@ public class GlobalScope extends BaseScope {
     }
 
     @Override
-    public void setId(String id) {
-
-    }
+    public void setId(String id) {}
 
     @Override
     public String getId() {

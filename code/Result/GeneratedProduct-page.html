@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Angular App</title>
+<style>
+		.container {
+		  display: flex;
+		  flex-direction: row;
+		  gap: 20px;
+		  padding: 20px;
+		  box-sizing: border-box;
+		}
+
+		.main-product {
+		  flex: 3;
+		  border: 1px solid #000;
+		  padding: 10px;
+		  text-align: center;
+		}
+
+		.main-product {
+		  max-width: 100%;
+		  height: auto;
+		}
+
+		.side-products {
+		  flex: 1;
+		  display: flex;
+		  flex-direction: column;
+		  gap: 10px;
+		}
+
+		.side-product {
+		  border: 1px solid #000;
+		  padding: 10px;
+		  text-align: center;
+		  cursor: pointer;
+		  transition: background-color 0.3s;
+		}
+
+		.side-product:hover {
+		  background-color: #f0f0f0;
+		}
+
+		.side-product {
+		  max-width: 80%;
+		  height: auto;
+		  margin: 10px;
+		}
+
+		.h3 {
+		  margin: 5px;
+		}
+
+		.p {
+		  margin: 0;
+		}
+
+</style>
+</head>
+<body>
+<script type='module'>
+export class ProductPageComponent {
+ constructor(){
+		this.defaultProducts = [		{
+		id: 'Product one',
+		name: 'food products',
+		image: 'assets/food_products.png',
+		details: 'We have the best food products and sounds from the best international and local brands.'
+		},
+		{
+		id: 'Product two',
+		name: 'cosmetic products',
+		image: 'assets/cosmetic_products.png',
+		details: 'The best types of perfumes and cosmetic products, both fragrant and soft.ً'
+		},
+		{
+		id: 'Product three',
+		name: 'Hut Pizza',
+		image: 'assets/pizza.png',
+		details: 'Vegetable pizza with chicken, all sizes and upon request'
+		},
+		{
+		id: 'Product four',
+		name: 'vegetable salad',
+		image: 'assets/salad.png',
+		details: 'Vegetable salads with country oil'
+		},
+		{
+		id: 'Product five',
+		name: 'sandwich',
+		image: 'assets/sandwich.png',
+		details: 'We have all kinds of sandwiches, Western and Eastern, and we are ready for all orders. Welcome to your restaurant.'
+		},
+		{
+		id: 'Product Six',
+		name: 'soup',
+		image: 'assets/soup.png',
+		details: 'Soup of all kinds and upon request'
+		},
+];
+		this.products = 		this.selectedProduct = null;
+		this.ngOnInit();
+}
+		selectProduct(product) {
+		  this.selectedProduct = product;
+		  renderProduct(product);
+		   renderSideProducts(this.products,this);
+		}
+		ngOnInit() {
+		  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+		    const saved = JSON.parse(localStorage.getItem('products')||'[]');
+		    const validSaved = saved.filter(pp => pp?.id && pp?.name && pp?.image && pp?.details);
+		    this.products = [...this.defaultProducts, ...validSaved];
+		  }
+		  else {
+		    this.products = [...this.defaultProducts];
+		  }
+		}
+		deleteProduct(index){
+		  const removed = this.products.splice(index,1)[0];
+		  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+		    const currentSaved = JSON.parse(localStorage.getItem('products')||'[]');
+		    const UpdatedSaved = currentSaved.filter(pp => pp.id!=removed.id);
+		    localStorage.setItem('products',JSON.stringify(UpdatedSaved));
+		  }
+		  if (this.selectedProduct?.id == removed.id) {
+		    this.selectedProduct = null;
+		  }
+		}}
+		function renderProduct(product) {
+		  if (!product) return;
+		  const container = document.querySelector('.main-product');
+		  container.innerHTML = '';
+		  const h3Id = document.createElement('h3');
+		  h3Id.textContent = product.id;
+		  const h3Name = document.createElement('h3');
+		  h3Name.textContent = product.name;
+		  const img = document.createElement('img');
+		  img.src = product.image;
+		  img.className = 'product-image';
+		  const pDetails = document.createElement('p');
+		   pDetails.textContent = product.details;
+		  container.appendChild(h3Id);
+		  container.appendChild(h3Name);
+		  container.appendChild(img);
+		  container.appendChild(pDetails);
+		}
+		function renderSideProducts(products, component) {
+		  const side = document.querySelector('.side-products');
+		  side.innerHTML = '';
+		  products.forEach(product => {
+		    const div = document.createElement('div');
+		    div.style.cursor = 'pointer';
+		    div.style.display = 'flex';
+		    div.style.alignItems = 'center';
+		    div.style.marginBottom = '5px';
+		    const img = document.createElement('img');
+		    img.src = product.image;
+		    img.style.width = '40px';
+		    img.style.height = '40px';
+		    img.style.marginRight = '10px';
+		    div.appendChild(img);
+		    const nameSpan = document.createElement('span');
+		    nameSpan.textContent = product.name;
+		    div.appendChild(nameSpan);
+		    div.onclick = () => { component.selectProduct(product); renderProduct(product); };
+		    side.appendChild(div);
+
+		    const btn = document.createElement('button');
+		    btn.textContent = 'Delete';
+		    btn.onclick = (e) => { 
+		      e.stopPropagation(); // لمنع تفعيل div.onclick عند الحذف
+		      const index = component.products.indexOf(product);
+		      if(index !== -1) { component.deleteProduct(index); renderSideProducts(component.products, component); }
+		    };
+		    side.appendChild(btn);
+		  });
+		}
+const page = new ProductPageComponent();
+renderSideProducts(page.products, page);
+ renderProduct(page.selectedProduct);
+</script>
+<div>
+<button onclick=window.location.href='GeneratedAddProduct.html'
+ class='add-button'>Add New Product </button>
+<div class='container'>
+<div class='main-product'>
+</div>
+<div class='side-products'>
+<div onclick='selectProduct(product)'></div>
+<button onclick="deleteProduct(i); $event.stopPropagation()"
+ class='delete-button'>Delete </button>
+</div>
+</div>
+</div>
+<div id='app'></div>
+<div id='main-product'></div>
+<div class='side-products'></div>
+</body>
+</html>

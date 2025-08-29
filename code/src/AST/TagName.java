@@ -1,6 +1,8 @@
 package AST;
 
 
+import org.stringtemplate.v4.ST;
+
 public class TagName {
     //H1| H2| H3| H4| IMG_| P| QuestionDot| RBRACE_RBRACE| LBRACE_LBRACE| Div_| Dot| Button
     String H1;
@@ -15,6 +17,11 @@ public class TagName {
     String Div_;
     String Dot;
     String Button;
+    String Textarea;
+    String Label;
+    String Input;
+
+
 
     public String getH1() {
         return H1;
@@ -112,6 +119,49 @@ public class TagName {
         Button = button;
     }
 
+    public String getTextarea() {
+        return Textarea;
+    }
+
+    public void setTextarea(String textarea) {
+        Textarea = textarea;
+    }
+
+    public String getLabel() {
+        return Label;
+    }
+
+    public void setLabel(String label) {
+        Label = label;
+    }
+
+    public String getInput() {
+        return Input;
+    }
+
+    public void setInput(String input) {
+        Input = input;
+    }
+
+    public String getName() {
+        if (H1 != null) return H1;
+        if (H2 != null) return H2;
+        if (H3 != null) return H3;
+        if (H4 != null) return H4;
+        if (IMG_ != null) return IMG_;
+        if (P != null) return P;
+        if (QuestionDot != null) return QuestionDot;
+        if (RBRACE_RBRACE != null) return RBRACE_RBRACE;
+        if (LBRACE_LBRACE != null) return LBRACE_LBRACE;
+        if (Div_ != null) return Div_;
+        if (Dot != null) return Dot;
+        if (Button != null) return Button;
+        if (Textarea != null) return Textarea;
+        if (Label != null) return Label;
+        if (Input != null) return Input;
+        return "";
+    }
+
     @Override
     public String toString() {
         if (H1!=null){
@@ -149,6 +199,14 @@ public class TagName {
         }
         if ( Button!=null){
             return  Button ;
+        }if(Textarea!=null){
+            return Textarea;
+        }
+        if(Label!=null){
+            return Label;
+        }
+        if(Input!=null){
+            return Input;
         }
         return "";
     }

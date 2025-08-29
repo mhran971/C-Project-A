@@ -1,8 +1,5 @@
 package SymbolTable.Scope;
-
-
 import SymbolTable.Symbol.Symbol;
-
 import java.util.List;
 import java.util.Set;
 

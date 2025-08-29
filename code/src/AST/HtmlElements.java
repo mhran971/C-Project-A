@@ -3,6 +3,11 @@ public class HtmlElements implements Statement {
     //htmlElement
     HtmlElement htmlElement;
 
+    @Override
+    public HtmlElements getHtmlElements() {
+        return this;
+    }
+
     public HtmlElement getHtmlElement() {
         return htmlElement;
     }

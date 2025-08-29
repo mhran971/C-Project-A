@@ -4,6 +4,11 @@ public class ImportStatement implements Statement {
     //Import importFromBlock
     ImportFromBlock importFromBlock;
 
+    @Override
+    public ImportStatement getImportStatement() {
+        return this;
+    }
+
     public ImportFromBlock getImportFromBlock() {
         return importFromBlock;
     }
@@ -18,6 +23,4 @@ public class ImportStatement implements Statement {
                '\n'+"importFromBlock=" + importFromBlock +'\n'
                ;
     }
-
-
 }

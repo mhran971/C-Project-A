@@ -6,6 +6,11 @@ public class ComponentStatement implements Statement{
     String Component;
     ComponentOptions componentOptions;
 
+    @Override
+    public ComponentStatement getComponentStatement() {
+        return this;
+    }
+
     public String getComponent() {
         return Component;
     }

@@ -3,6 +3,7 @@ public class UrlStatement {
     //   TemplateUrl | StyleUrl
     String TemplateUrl;
     String StyleUrl;
+    String Template;
 
     public String getTemplateUrl() {
         return TemplateUrl;
@@ -20,6 +21,14 @@ public class UrlStatement {
         StyleUrl = styleUrl;
     }
 
+    public String getTemplate() {
+        return Template;
+    }
+
+    public void setTemplate(String template) {
+        Template = template;
+    }
+
     @Override
     public String toString() {
         if (TemplateUrl!=null){
@@ -28,6 +37,10 @@ public class UrlStatement {
         }
         if (StyleUrl!=null){
             return '\n' + "StyleUrl=" + StyleUrl + '\n'
+                    ;
+        }
+        if (Template!=null){
+            return '\n' + "Template=" + Template + '\n'
                     ;
         }
         return ""

@@ -12,6 +12,8 @@ import antlr.AngularParser;
 import antlr.AngularParserBaseVisitor;
 import app.SemanticCheck;
 import java.util.*;
+import java.util.List;
+
 import static SemanticError.BindingChecker.checkBinding;
 import static SemanticError.CheckStringAssignment.checkStringAssignment;
 import static SemanticError.TemplateUrlCheck.checkTemplateUrl;
@@ -126,6 +128,9 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         interfaceStatement.setInterfaceAttributes((InterfaceAttributes) visit(ctx.interfaceAttributes()));
         return interfaceStatement;
     }
+
+
+
     @Override
     public InterfaceAttributes visitInterfaceAttributes(AngularParser.InterfaceAttributesContext ctx) {
         InterfaceAttributes interfaceAttributes=new InterfaceAttributes();
@@ -165,11 +170,11 @@ public class BaseVisitor extends AngularParserBaseVisitor {
        this.globalStack.push(globalScope);
        this.symbolTable.addGlobalScope(globalScope);
        SymbolBase symbolBase = new SymbolBase();
-       symbolBase.setName(ctx.reservedWord().getText());
+       symbolBase.setName(ctx.Component().getText());
        symbolBase.setValue("ComponentOptions:");
-       symbolBase.setType(ctx.reservedWord().getText());
-       globalScope.symbols.put(ctx.reservedWord().getText(), symbolBase);
-       componentStatement.setComponent(ctx.reservedWord().getText());
+       symbolBase.setType(ctx.Component().getText());
+       globalScope.symbols.put(ctx.Component().getText(), symbolBase);
+       componentStatement.setComponent(ctx.Component().getText());
        componentStatement.setComponentOptions((ComponentOptions) visit(ctx.componentOptions()));
        boolean hasSelector = false;
        for (String key : globalScope.symbols.keySet()) {
@@ -279,6 +284,12 @@ public class BaseVisitor extends AngularParserBaseVisitor {
             symbolBase.setValue(ctx.StyleUrl().getText());
             symbolBase.setType("ReservedWord:");
         }
+        if(ctx.Template()!=null){
+           urlStatement.setTemplate(ctx.Template().getText());
+            symbolBase.setName(ctx.Template().getText());
+            symbolBase.setValue(ctx.Template().getText());
+            symbolBase.setType("ReservedWord:");
+        }
         scope.symbols.put(symbolBase.getName(), symbolBase);
         return urlStatement;
     }
@@ -305,6 +316,12 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         ExportStatement exportStatement=new ExportStatement();
         exportStatement.setKeyword((Keyword) visit(ctx.keyword()));
         exportStatement.setDeclarationName((DeclarationName) visit(ctx.declarationName()));
+        if(ctx.Implements()!=null){
+            exportStatement.setImplements(ctx.Implements().getText());
+        }
+        if(ctx.OnInit()!=null){
+            exportStatement.setOnInit(ctx.OnInit().getText());
+        }
         GlobalScope globalScope = new GlobalScope(null);
         globalScope.setName("Export Scope:");
         this.globalStack.push(globalScope);
@@ -324,13 +341,19 @@ public class BaseVisitor extends AngularParserBaseVisitor {
 
     @Override
     public FullClassBody visitFullClassBody(AngularParser.FullClassBodyContext ctx) {
-        PropertyList propertyList=(PropertyList) visit(ctx.propertyList());
+        List<PropertyList> propertyLists = new ArrayList<>();
+        for (int i = 0; i < ctx.propertyList().size(); i++) {
+            propertyLists.add((PropertyList) visit(ctx.propertyList(i)));
+        }
         PropertyDeclarationCom propertyDeclarationCom=null;
         if(ctx.propertyDeclarationCom()!=null){
             propertyDeclarationCom=(PropertyDeclarationCom) visit(ctx.propertyDeclarationCom());
         }
-        MethodDeclaration methodDeclaration=(MethodDeclaration) visit(ctx.methodDeclaration());
-        return new FullClassBody(propertyList,propertyDeclarationCom,methodDeclaration);
+        MethodDeclaration methodDeclaration=null;
+        if(ctx.methodDeclaration()!=null){
+            methodDeclaration=(MethodDeclaration) visit(ctx.methodDeclaration());
+        }
+        return new FullClassBody(propertyLists,propertyDeclarationCom,methodDeclaration);
     }
     @Override
     public PropertyString visitPropertyString(AngularParser.PropertyStringContext ctx) {
@@ -347,7 +370,9 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         SymbolBase symbolBase = new SymbolBase();
         symbolBase.setName(ctx.declarationName().getText());
         symbolBase.setValue("Products:");
-        symbolBase.setType(ctx.STRING().getText());
+        if(ctx.STRING()!=null){
+            symbolBase.setType(ctx.STRING().getText());
+        }
         if (ctx.STRING()!=null){
             propertyList.setSTRING(ctx.STRING().getText());
         }
@@ -375,21 +400,26 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         return bodyList;
     }
    @Override
-    public BodyListInner visitBodyListinner(AngularParser.BodyListinnerContext ctx) {
-        BaseScope scope = !localStack.isEmpty() ? localStack.peek() : globalStack.peek();
-        BodyListInner bodyListinner = new BodyListInner();
-        DeclarationName declName = (DeclarationName) visit(ctx.declarationName());
-        StringLiteral strLiteral = (StringLiteral) visit(ctx.stringLiteral());
-        bodyListinner.setDeclarationName(declName);
-        bodyListinner.setStringLiteral(strLiteral);
-        SymbolBase symbolBase = new SymbolBase();
-        symbolBase.setName(declName.getSTRING());
-        symbolBase.setValue(strLiteral.getStringLiteral());
-        symbolBase.setType("string");
-        scope.symbols.put(symbolBase.getName(), symbolBase);
+   public BodyListInner visitBodyListinner(AngularParser.BodyListinnerContext ctx) {
+       BaseScope scope = !localStack.isEmpty() ? localStack.peek() : globalStack.peek();
+       BodyListInner bodyListinner = new BodyListInner();
+       DeclarationName declName = (DeclarationName) visit(ctx.declarationName());
+       bodyListinner.setDeclarationName(declName);
+       StringLiteral strLiteral = null;
+       if (ctx.stringLiteral() != null) {
+           strLiteral = (StringLiteral) visit(ctx.stringLiteral());
+           bodyListinner.setStringLiteral(strLiteral);
+       }
+       SymbolBase symbolBase = new SymbolBase();
+       symbolBase.setName(declName.getSTRING());
+       symbolBase.setType("string");
+       String value = (strLiteral != null) ? strLiteral.getStringLiteral() : "";
+       symbolBase.setValue(value);
+       scope.symbols.put(symbolBase.getName(), symbolBase);
        checkStringAssignment(scope, ctx, symbolBase.getName(), symbolBase.getValue());
        return bodyListinner;
-    }
+   }
+
     @Override
     public PropertyDeclarationCom visitPropertyDeclarationCom(AngularParser.PropertyDeclarationComContext ctx) {
         PropertyDeclarationCom propertyDeclarationCom=new PropertyDeclarationCom();
@@ -456,8 +486,7 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         for(int i=0;i<ctx.statementMethod().size();i++){
             if(ctx.statementMethod(i)!=null){
                 methodBody.getStatementMethod().add((StatementMethod) visit(ctx.statementMethod(i)));
-            }
-        }
+            } }
         return methodBody;
     }
     @Override
@@ -467,6 +496,270 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         statementMethod.setDeclarationName((DeclarationName) visit(ctx.declarationName()));
         statementMethod.setDeclarationString((DeclarationString) visit(ctx.declarationString()));
         return statementMethod ;
+    }
+    ///////////////////added//////////////////////////////////////////
+    @Override
+    public FunctionNgOnInit visitFunctionNgOnInit(AngularParser.FunctionNgOnInitContext ctx) {
+       FunctionNgOnInit functionNgOnInit=new FunctionNgOnInit();
+        GlobalScope globalScope = new GlobalScope(null);
+        globalScope.setName("Method Scope:");
+        this.globalStack.push(globalScope);
+        this.symbolTable.addGlobalScope(globalScope);
+        SymbolBase symbolBase = new SymbolBase();
+        symbolBase.setName(ctx.NgOnInit().getText());
+        symbolBase.setValue(ctx.keyword().getText());
+       functionNgOnInit.setNgOnInit(ctx.NgOnInit().getText());
+       functionNgOnInit.setKeyword((Keyword) visit(ctx.keyword()));
+        for(int i=0;i<ctx.bodyNgOnInit().size();i++){
+            if(ctx.bodyNgOnInit(i)!=null){
+                functionNgOnInit.getBodyNgOnInit().add((BodyNgOnInit) visit(ctx.bodyNgOnInit(i)));
+            }  }
+        symbolBase.setType("Function");
+        globalScope.symbols.put(symbolBase.getName(),symbolBase);
+        return functionNgOnInit;
+    }
+    @Override
+    public BodyNgOnInit visitBodyNgOnInit(AngularParser.BodyNgOnInitContext ctx) {
+       BodyNgOnInit bodyNgOnInit=new BodyNgOnInit();
+       if(ctx.ifStatement()!=null){
+           bodyNgOnInit.setIfStatement((IfStatement) visit(ctx.ifStatement()));
+       }
+       if(ctx.elseStatement()!=null){
+           bodyNgOnInit.setElseStatement((ElseStatement) visit(ctx.elseStatement()));
+       }
+        return bodyNgOnInit;
+    }
+    @Override
+    public IfStatement visitIfStatement(AngularParser.IfStatementContext ctx) {
+       IfStatement ifStatement =new IfStatement();
+       if(ctx.expressionIf()!=null){
+           ifStatement.setExpressionIf((ExpressionIf) visit(ctx.expressionIf()));
+       }
+        for(int i=0;i<ctx.blockIf().size();i++){
+            if(ctx.blockIf(i)!=null){
+                ifStatement.getBlockIf().add((BlockIf) visit(ctx.blockIf(i)));
+            }  }
+        return ifStatement;
+    }
+    @Override
+    public  ExpressionIf visitExpressionIf(AngularParser.ExpressionIfContext ctx) {
+       ExpressionIf expressionIf=new ExpressionIf();
+        for(int i=0;i<ctx.Typeof().size();i++){
+            if(ctx.Typeof(i)!=null){
+                expressionIf.getTypeof().add(ctx.Typeof(i).getText());
+            }  }
+        if(ctx.Window()!=null){
+            expressionIf.setWindow(ctx.Window().getText());
+        }
+        if(ctx.LocalStorage()!=null){
+            expressionIf.setLocalStorage(ctx.LocalStorage().getText());
+        }
+        if (ctx.keyword()!=null){
+            expressionIf.setKeyword((Keyword) visit(ctx.keyword()));
+        }
+        for(int i=0;i<ctx.stringLiteral().size();i++){
+            if(ctx.stringLiteral(i)!=null){
+                expressionIf.getStringLiteral().add((StringLiteral) visit(ctx.stringLiteral(i)));
+            }  }
+        for(int i=0;i<ctx.declarationName().size();i++){
+            if(ctx.declarationName(i)!=null){
+                expressionIf.getDeclarationName().add((DeclarationName) visit(ctx.declarationName(i)));
+            }  }
+        return expressionIf;
+    }
+    @Override
+    public BlockIfJSON visitBlockIfJSON(AngularParser.BlockIfJSONContext ctx) {
+        BaseScope scope = !localStack.isEmpty() ? localStack.peek() : globalStack.peek();
+       BlockIfJSON blockIfJSON=new BlockIfJSON();
+       blockIfJSON.setContentJSON((ContentJSON) visit(ctx.contentJSON()));
+       blockIfJSON.setKeyword((Keyword) visit(ctx.keyword()));
+       blockIfJSON.setJSONParse(ctx.JSONParse().getText());
+       blockIfJSON.setSTRING(ctx.STRING().getText());
+        SymbolBase symbolBase = new SymbolBase();
+        symbolBase.setName(ctx.STRING().getText());
+        symbolBase.setType(ctx.keyword().getText());
+        symbolBase.setValue(ctx.JSONParse().getText());
+        scope.symbols.put(symbolBase.getName(), symbolBase);
+        return blockIfJSON;
+    }
+    @Override
+    public BlockIfFilter visitBlockIfFilter(AngularParser.BlockIfFilterContext ctx) {
+        BaseScope scope = !localStack.isEmpty() ? localStack.peek() : globalStack.peek();
+       BlockIfFilter blockIfFilter=new BlockIfFilter();
+       blockIfFilter.setSTRING(ctx.STRING().getText());
+       blockIfFilter.setKeyword((Keyword) visit(ctx.keyword()));
+       blockIfFilter.setContentFilter((ContentFilter) visit(ctx.contentFilter()));
+        for(int i=0;i<ctx.declarationName().size();i++){
+            if(ctx.declarationName(i)!=null){
+                blockIfFilter.getDeclarationName().add((DeclarationName) visit(ctx.declarationName(i)));
+            }  }
+        SymbolBase symbolBase = new SymbolBase();
+        symbolBase.setName(ctx.STRING().getText());
+        symbolBase.setType(ctx.keyword().getText());
+        symbolBase.setValue("saved.filter");
+        scope.symbols.put(symbolBase.getName(), symbolBase);
+        return blockIfFilter;
+    }
+    @Override
+    public BlockIfElse visitBlockIfElse(AngularParser.BlockIfElseContext ctx) {
+       BlockIfElse blockIfElse=new BlockIfElse();
+       blockIfElse.setContentElse((ContentElse) visit(ctx.contentElse()));
+        return blockIfElse;
+    }
+    @Override
+    public BlockIfLocalStorage visitBlockIfLocalStorage(AngularParser.BlockIfLocalStorageContext ctx) {
+          BlockIfLocalStorage blockIfLocalStorage=new BlockIfLocalStorage();
+          blockIfLocalStorage.setLocalStorage(ctx.LocalStorage().getText());
+          blockIfLocalStorage.setDeclarationName((DeclarationName) visit(ctx.declarationName()));
+          blockIfLocalStorage.setContentLocalStorage((ContentLocalStorage) visit(ctx.contentLocalStorage()));
+        return blockIfLocalStorage;
+    }
+    @Override
+    public BlockIfNullLiteral visitBlockIfNullLiteral(AngularParser.BlockIfNullLiteralContext ctx) {
+       BlockIfNullLiteral blockIfNullLiteral=new BlockIfNullLiteral();
+       blockIfNullLiteral.setKeyword((Keyword) visit(ctx.keyword()));
+       blockIfNullLiteral.setDeclarationName((DeclarationName) visit(ctx.declarationName()));
+        return blockIfNullLiteral;
+    }
+    @Override
+    public BlockIfEllipsis visitBlockIfEllipsis(AngularParser.BlockIfEllipsisContext ctx) {
+       BlockIfEllipsis blockIfEllipsis=new BlockIfEllipsis();
+        blockIfEllipsis.setKeyword((Keyword) visit(ctx.keyword()));
+        for(int i=0;i<ctx.declarationName().size();i++){
+            if(ctx.declarationName(i)!=null){
+                blockIfEllipsis.getDeclarationName().add((DeclarationName) visit(ctx.declarationName(i)));
+            } }
+        return blockIfEllipsis;
+    }
+    @Override
+    public BlockIfTable visitBlockIfTable(AngularParser.BlockIfTableContext ctx) {
+       BlockIfTable blockIfTable=new BlockIfTable();
+       blockIfTable.setKeyword((Keyword) visit(ctx.keyword()));
+       blockIfTable.setReservedWord((ReservedWord) visit(ctx.reservedWord()));
+       blockIfTable.setStringLiteral((StringLiteral) visit(ctx.stringLiteral()));
+       blockIfTable.setDeclarationName((DeclarationName) visit(ctx.declarationName()));
+       return blockIfTable;
+    }
+    @Override
+    public ContentJSON visitContentJSON(AngularParser.ContentJSONContext ctx) {
+       ContentJSON contentJSON=new ContentJSON();
+       contentJSON.setLocalStorage(ctx.LocalStorage().getText());
+       contentJSON.setDeclarationName((DeclarationName) visit(ctx.declarationName()));
+        for(int i=0;i<ctx.stringLiteral().size();i++){
+            if(ctx.stringLiteral(i)!=null){
+                contentJSON.getStringLiteral().add((StringLiteral) visit(ctx.stringLiteral(i)));
+            } }
+        return contentJSON;
+    }
+    @Override
+    public ContentFilter visitContentFilter(AngularParser.ContentFilterContext ctx) {
+       ContentFilter contentFilter=new ContentFilter();
+       contentFilter.setSTRING(ctx.STRING().getText());
+       contentFilter.setAny(ctx.Any().getText());
+        for(int i=0;i<ctx.filterArrow().size();i++){
+            if(ctx.filterArrow(i)!=null){
+                contentFilter.getFilterArrow().add((FilterArrow) visit(ctx.filterArrow(i)));
+            } }
+        return contentFilter;
+    }
+    @Override
+    public FilterArrow  visitFilterArrow(AngularParser.FilterArrowContext ctx) {
+        FilterArrow filterArrow=new FilterArrow();
+        for(int i=0;i<ctx.declarationName().size();i++){
+            if(ctx.declarationName(i)!=null){
+                filterArrow.getDeclarationName().add((DeclarationName) visit(ctx.declarationName(i)));
+            } }
+        return filterArrow;
+    }
+    @Override
+    public ContentLocalStorage visitContentLocalStorage(AngularParser.ContentLocalStorageContext ctx) {
+        ContentLocalStorage contentLocalStorage=new ContentLocalStorage();
+        contentLocalStorage.setStringLiteral((StringLiteral) visit(ctx.stringLiteral()));
+        for(int i=0;i<ctx.declarationName().size();i++){
+            if(ctx.declarationName(i)!=null){
+                contentLocalStorage.getDeclarationName().add((DeclarationName) visit(ctx.declarationName(i)));
+            } }
+        return contentLocalStorage;
+    }
+    @Override
+    public ElseStatement visitElseStatement(AngularParser.ElseStatementContext ctx) {
+       ElseStatement elseStatement=new ElseStatement();
+       elseStatement.setContentElse((ContentElse) visit(ctx.contentElse()));
+       elseStatement.setContentElse((ContentElse) visit(ctx.contentElse()));
+        return elseStatement;
+    }
+    @Override
+    public ContentElse visitContentElse(AngularParser.ContentElseContext ctx) {
+       ContentElse contentElse=new ContentElse();
+        for(int i=0;i<ctx.declarationName().size();i++){
+            if(ctx.declarationName(i)!=null){
+                contentElse.getDeclarationName().add((DeclarationName) visit(ctx.declarationName(i)));
+            } }
+        for(int i=0;i<ctx.keyword().size();i++){
+            if(ctx.keyword(i)!=null){
+                contentElse.getKeyword().add((Keyword) visit(ctx.keyword(i)));
+            } }
+        return contentElse;
+    }
+    @Override
+    public FunctionDelete visitFunctionDelete(AngularParser.FunctionDeleteContext ctx) {
+        FunctionDelete functionDelete=new FunctionDelete();
+        functionDelete.setSTRING(ctx.STRING().getText());
+        functionDelete.setNumber(ctx.Number().getText());
+        functionDelete.setDeclarationName((DeclarationName) visit(ctx.declarationName()));
+        for(int i=0;i<ctx.functionDeleteContent().size();i++){
+            if(ctx.functionDeleteContent(i)!=null){
+                functionDelete.getFunctionDeleteContent().add((FunctionDeleteContent) visit(ctx.functionDeleteContent(i)));
+            } }
+        return functionDelete;
+    }
+    @Override
+    public FunctionDeleteContent visitFunctionDeleteContent(AngularParser.FunctionDeleteContentContext ctx) {
+        FunctionDeleteContent functionDeleteContent=new FunctionDeleteContent();
+        if(ctx.ifStatement()!=null){
+            functionDeleteContent.setIfStatement((IfStatement) visit(ctx.ifStatement()));
+        }
+        for(int i=0;i<ctx.keyword().size();i++){
+            if(ctx.keyword(i)!=null){
+                functionDeleteContent.getKeyword().add((Keyword) visit(ctx.keyword(i)));
+            } }
+        for(int i=0;i<ctx.STRING().size();i++){
+            if(ctx.STRING(i)!=null){
+                functionDeleteContent.getSTRING().add(ctx.STRING(i).getText());
+            } }
+        for(int i=0;i<ctx.declarationName().size();i++){
+            if(ctx.declarationName(i)!=null){
+                functionDeleteContent.getDeclarationName().add((DeclarationName) visit(ctx.declarationName(i)));
+            } }
+        return functionDeleteContent;
+    }
+    @Override
+    public Constructor visitConstructor(AngularParser.ConstructorContext ctx) {
+       Constructor constructor=new Constructor();
+       constructor.setType((Type) visit(ctx.type()));
+       constructor.setConstructor(ctx.Constructor().getText());
+        for(int i=0;i<ctx.reservedWord().size();i++){
+            if(ctx.reservedWord(i)!=null){
+                constructor.getReservedWord().add((ReservedWord) visit(ctx.reservedWord(i)));
+            } }
+        return constructor;
+    }
+    @Override
+    public FunctionAdd visitFunctionAdd(AngularParser.FunctionAddContext ctx) {
+       FunctionAdd functionAdd =new FunctionAdd();
+       functionAdd.setDeclarationName((DeclarationName) visit(ctx.declarationName()));
+        for(int i=0;i<ctx.functionAddContent().size();i++){
+            if(ctx.functionAddContent(i)!=null){
+                functionAdd.getFunctionAddContent().add((FunctionAddContent) visit(ctx.functionAddContent(i)));
+            } }
+        return functionAdd;
+    }
+
+    @Override
+    public FunctionAddContent visitFunctionAddContent(AngularParser.FunctionAddContentContext ctx) {
+       FunctionAddContent functionAddContent=new FunctionAddContent();
+       functionAddContent.setBlockIf((BlockIf) visit(ctx.blockIf()));
+        return functionAddContent;
     }
 
     @Override
@@ -480,6 +773,7 @@ public class BaseVisitor extends AngularParserBaseVisitor {
     public HtmlElements visitHtmlElements(AngularParser.HtmlElementsContext ctx) {
         HtmlElements htmlElements=new HtmlElements();
         htmlElements.setHtmlElement((HtmlElement) visit(ctx.htmlElement()));
+       // htmlElements.setHtmlElement(visit(ctx.));
         return htmlElements ;
     }
     @Override
@@ -521,6 +815,9 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         }
         if(ctx.stringLiteral()!=null){
             htmlTagNameStart.setStringLiteral((StringLiteral) visit(ctx.stringLiteral()));
+        }
+        if(ctx.Greater()!=null){
+            htmlTagNameStart.setGreater(ctx.Greater().getText());
         }
         return htmlTagNameStart;
     }
@@ -569,6 +866,53 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         HtmlBrace htmlBrace=(HtmlBrace) visit(ctx.htmlBrace());
         return new HtmlContentBrace(tagName,contentHtml,htmlBrace);
     }
+    //////////added///////////////////////////////////////
+    @Override
+    public  HtmlButton visitHtmlButton(AngularParser.HtmlButtonContext ctx) {
+         HtmlButton htmlButton=new HtmlButton();
+         if(ctx.keyword()!=null){
+             htmlButton.setKeyword((Keyword) visit(ctx.keyword()));
+         }
+         if(ctx.STRING()!=null){
+             htmlButton.setSTRING(ctx.STRING().getText());
+         }
+         if(ctx.reservedWord()!=null){
+             htmlButton.setReservedWord((ReservedWord) visit(ctx.reservedWord()));
+         }
+        for (int i = 0; i < ctx.stringLiteral().size(); i++) {
+            if (ctx.stringLiteral(i) != null) {
+                htmlButton.getStringLiteral().add((StringLiteral) visit(ctx.stringLiteral(i)));
+            } }
+        for (int i = 0; i < ctx.declarationName().size(); i++) {
+            if (ctx.declarationName(i) != null) {
+                htmlButton.getDeclarationName().add((DeclarationName) visit(ctx.declarationName(i)));
+            } }
+        return htmlButton;
+    }
+    @Override
+    public  DeclarationNumber visitDeclarationNumber(AngularParser.DeclarationNumberContext ctx) {
+       DeclarationNumber declarationNumber=new DeclarationNumber();
+       if(ctx.Number()!=null){
+           declarationNumber.setNumber(ctx.Number().getText());
+       }
+       declarationNumber.setDeclarationName((DeclarationName) visit(ctx.declarationName()));
+        return declarationNumber;
+    }
+
+    @Override
+    public DeclarationNgModel visitDeclarationNgModel(AngularParser.DeclarationNgModelContext ctx) {
+       DeclarationNgModel declarationNgModel=new DeclarationNgModel();
+       declarationNgModel.setNgModel(ctx.NgModel().getText());
+       if(ctx.declarationName()!=null){
+           declarationNgModel.setDeclarationName((DeclarationName) visit(ctx.declarationName()));
+       }
+        for (int i = 0; i < ctx.stringLiteral().size(); i++) {
+            if (ctx.stringLiteral(i) != null) {
+                declarationNgModel.getStringLiteral().add((StringLiteral) visit(ctx.stringLiteral(i)));
+            } }
+        return declarationNgModel;
+    }
+
     @Override
     public HtmlImgAttribute visitHtmlImgAttribute(AngularParser.HtmlImgAttributeContext ctx) {
         HtmlImgAttribute htmlImgAttribute=new HtmlImgAttribute();
@@ -643,18 +987,35 @@ public class BaseVisitor extends AngularParserBaseVisitor {
     }
 
     @Override
-    public HtmlAttributes visitHtmlAttributes(AngularParser.HtmlAttributesContext ctx) {
-        HtmlAttributes htmlAttributes=new HtmlAttributes();
-        for(int i=0;i<ctx.STRING().size();i++){
-            htmlAttributes.getSTRING().add((String) visit(ctx.STRING(i)));
-        }
-        for(int i=0;i<ctx.tagName().size();i++){
-            htmlAttributes.getTagName().add((TagName) visit(ctx.tagName(i)));
-        }
-        String value = ctx.getText();
-        checkBinding(value, ctx, symbolTable);
-        return htmlAttributes;
+    public HtmlAttrSet visitHtmlAttrSet(AngularParser.HtmlAttrSetContext ctx) {
+        HtmlAttrSet htmlAttrSet=new HtmlAttrSet();
+        htmlAttrSet.setHtmlAttributes((HtmlAttributes) visit(ctx.htmlAttributes()));
+        return htmlAttrSet;
     }
+
+
+ @Override
+ public HtmlAttributes visitHtmlAttributes(AngularParser.HtmlAttributesContext ctx) {
+     HtmlAttributes htmlAttributes = new HtmlAttributes();
+
+     // جمع أسماء الخصائص
+     for (int i = 0; i < ctx.tagName().size(); i++) {
+         TagName tagName = (TagName) visit(ctx.tagName(i));
+         htmlAttributes.getTagName().add(tagName);
+     }
+
+     // جمع القيم النصية (إن وجدت)
+     for (int i = 0; i < ctx.STRING().size(); i++) {
+         htmlAttributes.getSTRING().add(ctx.STRING(i).getText());
+     }
+
+     // للتحقق من البايندينغ مثلاً
+     String value = ctx.getText();
+     checkBinding(value, ctx, symbolTable);
+
+     return htmlAttributes;
+ }
+
     @Override
     public CssElement visitCssElement(AngularParser.CssElementContext ctx) {
         CssElement cssElement=new CssElement();
@@ -679,6 +1040,9 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         if(ctx.STRING()!=null){
             selector.setSTRING(ctx.STRING().getText());
         }
+        if(ctx.Textarea()!=null){
+            selector.setTextarea(ctx.Textarea().getText());
+        }
         for(int i=0;i<ctx.selectorInternal().size();i++){
             if (ctx.selectorInternal()!=null){
                 selector.getSelectorInternal().add((SelectorInternal) visit(ctx.selectorInternal(i)));
@@ -698,7 +1062,12 @@ public class BaseVisitor extends AngularParserBaseVisitor {
     public  CssProperty visitCssProperty(AngularParser.CssPropertyContext ctx) {
         CssProperty cssProperty=new CssProperty();
         cssProperty.setCss((Css) visit(ctx.css()));
-        cssProperty.setCssValue((CssValue) visit(ctx.cssValue()));
+        for(int i=0;i<ctx.cssValue().size();i++){
+            if (ctx.cssValue()!=null){
+                cssProperty.getCssValue().add((CssValue) visit(ctx.cssValue(i)));
+            }
+        }
+        //cssProperty.setCssValue((CssValue) visit(ctx.cssValue()));
         return cssProperty;
     }
     @Override
@@ -746,6 +1115,15 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         else if(ctx.Margin()!=null){
             css.setMargin(ctx.Margin().getText());
         }
+        else if(ctx.FontSize()!=null){
+            css.setFontSize(ctx.FontSize().getText());
+        }
+        else if(ctx.Width()!=null){
+            css.setWidth(ctx.Width().getText());
+        }
+        else if(ctx.Color()!=null){
+            css.setColor(ctx.Color().getText());
+        }
         return css;
     }
     @Override
@@ -778,6 +1156,9 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         if(ctx.HEXCHAR()!=null){
             cssValue.setHEXCHAR(ctx.HEXCHAR().getText());
         }
+        if(ctx.STRING()!=null){
+            cssValue.setSTRING(ctx.STRING().getText());
+        }
         return  cssValue;
     }
     @Override
@@ -800,9 +1181,25 @@ public class BaseVisitor extends AngularParserBaseVisitor {
     @Override
     public  DecimalLiteralUnit visitDecimalLiteralUnit(AngularParser.DecimalLiteralUnitContext ctx) {
         DecimalLiteralUnit decimalLiteralUnit=new DecimalLiteralUnit();
-        decimalLiteralUnit.setDecimalLiteral_UNIT(ctx.DecimalLiteral_UNIT().getText());
+       decimalLiteralUnit.setDecimalLiteral_UNIT(ctx.DecimalLiteral_UNIT().getText());
         return  decimalLiteralUnit;
     }
+
+    @Override
+    public UnitSolidColor visitUnitSolidColor(AngularParser.UnitSolidColorContext ctx) {
+        UnitSolidColor unitSolidColor=new UnitSolidColor();
+        if(ctx.decimalLiteralUnit()!=null) {
+            unitSolidColor.setDecimalLiteralUnit((DecimalLiteralUnit) visit(ctx.decimalLiteralUnit()));
+        }
+        if(ctx.Solid()!=null){
+            unitSolidColor.setSolid(ctx.Solid().getText());
+        }
+        if(ctx.HEXCHAR()!=null){
+            unitSolidColor.setHEXCHAR(ctx.HEXCHAR().getText());
+        }
+        return unitSolidColor;
+    }
+
     @Override
     public DecimalLiteral visitDecimalLiteral(AngularParser.DecimalLiteralContext ctx) {
         DecimalLiteral decimalLiteral=new DecimalLiteral();
@@ -850,6 +1247,15 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         if (ctx.Button() != null) {
             tagName.setButton(ctx.Button().getText());
         }
+        if(ctx.Textarea()!=null){
+            tagName.setTextarea(ctx.Textarea().getText());
+        }
+        if(ctx.Label()!=null){
+            tagName.setLabel(ctx.Label().getText());
+        }
+        if(ctx.Input()!=null){
+            tagName.setInput(ctx.Input().getText());
+        }
         return tagName;
     }
     @Override
@@ -870,16 +1276,21 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         return htmlKeyword;
     }
     @Override
+    public ComponentOption visitOptionStandaloneLabel(AngularParser.OptionStandaloneLabelContext ctx) {
+        Identifier identifier = visitIdentifier(ctx.identifier());
+        return identifier;
+    }
+
+    @Override
     public Identifier visitIdentifier(AngularParser.IdentifierContext ctx) {
         Identifier identifier=new Identifier();
         if (ctx.Identifier() != null) {
             identifier.setIdentifier(ctx.Identifier().getText());
         } else if (ctx.Or() != null) {
             identifier.setOr(ctx.Or().getText());
-        } else if (ctx.Less() != null) {
-            identifier.setIdentifier(ctx.Less().getText());
-        } else if (ctx.Greater() != null) {
-            identifier.setIdentifier(ctx.Greater().getText());
+        }
+        else if (ctx.True_() != null) {
+            identifier.setTrue_(ctx.True_().getText());
         }
         return identifier;
     }
@@ -909,6 +1320,9 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         if (ctx.Number()!=null){
             type.setNumber(ctx.Number().getText());
         }
+        if (ctx.Private()!=null){
+            type.setPrivate(ctx.Private().getText());
+        }
         return type;
     }
     @Override
@@ -932,11 +1346,23 @@ public class BaseVisitor extends AngularParserBaseVisitor {
         if (ctx.Input()!=null){
             reservedWord.setInput(ctx.Input().getText());
         }
-        if (ctx.OnInit()!=null){
+      /*  if (ctx.OnInit()!=null){
             reservedWord.setOnInit(ctx.OnInit().getText());
-        }
+        }*/
         if (ctx.Click()!=null){
             reservedWord.setClick(ctx.Click().getText());
+        }
+        if (ctx.RouterLink()!=null){
+            reservedWord.setRouterLink(ctx.RouterLink().getText());
+        }
+        if (ctx.FormsModule()!=null){
+            reservedWord.setFormsModule(ctx.FormsModule().getText());
+        }
+        if (ctx.Router()!=null){
+            reservedWord.setRouter(ctx.Router().getText());
+        }
+        if (ctx.Router_()!=null){
+            reservedWord.setRouter_(ctx.Router_().getText());
         }
         return reservedWord;
     }

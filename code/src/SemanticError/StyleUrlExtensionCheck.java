@@ -1,5 +1,4 @@
 package SemanticError;
-
 import SymbolTable.Scope.GlobalScope;
 import SymbolTable.Symbol.Symbol;
 import SymbolTable.Symbol.SymbolBase;
@@ -17,7 +16,8 @@ public class StyleUrlExtensionCheck {
                         SymbolBase sb = (SymbolBase) symbol;
                         String value = sb.getValue().replaceAll("[\\[\\]'\" ]", "");
                         if (!(value.endsWith(".css"))) {
-                            String errorMsg = "❌styleUrls value must end with a valid stylesheet extension like .css in line "+currentLine;
+                            String errorMsg =
+                                    "❌styleUrls value must end with a valid stylesheet extension like .css in line "+currentLine;
                             if (!SemanticCheck.Errors.contains(errorMsg)) {
                                 SemanticCheck.Errors.add(errorMsg);
                             }

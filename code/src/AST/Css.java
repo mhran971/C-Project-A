@@ -8,6 +8,7 @@ public class Css {
     String Max_With;String Height;
     String Cursor; String Transition;
     String Background_Color;String Margin;
+    String FontSize;String Width; String  Color;
 
     public String getDisplay() {
         return Display;
@@ -121,6 +122,51 @@ public class Css {
         Margin = margin;
     }
 
+    public String getFontSize() {
+        return FontSize;
+    }
+
+    public void setFontSize(String fontSize) {
+        FontSize = fontSize;
+    }
+
+    public String getWidth() {
+        return Width;
+    }
+
+    public void setWidth(String width) {
+        Width = width;
+    }
+
+    public String getColor() {
+        return Color;
+    }
+
+    public void setColor(String color) {
+        Color = color;
+    }
+
+    public String getName() {
+        if (Display != null) return Display;
+        if (Flex_Direction != null) return Flex_Direction;
+        if (Gap != null) return Gap;
+        if (Padding != null) return Padding;
+        if (Box_Size != null) return Box_Size;
+        if (Flex != null) return Flex;
+        if (Border != null) return Border;
+        if (Text_Align != null) return Text_Align;
+        if (Max_With != null) return Max_With;
+        if (Height != null) return Height;
+        if (Cursor != null) return Cursor;
+        if (Transition!= null) return Transition;
+        if (Background_Color != null) return Background_Color;
+        if (Margin != null) return Margin;
+        if (FontSize != null) return FontSize;
+        if (Width != null) return Width;
+        if (Color != null) return Color;
+        return "";
+    }
+
     @Override
     public String toString() {
         if(Display !=null){
@@ -161,6 +207,15 @@ public class Css {
         }
         if(Background_Color !=null){
             return  Background_Color ;
+        }
+        if(FontSize !=null){
+            return  FontSize ;
+        }
+        if( Color !=null){
+            return   Color ;
+        }
+        if( Width !=null){
+            return   Width ;
         }
         return Margin   ;
     }

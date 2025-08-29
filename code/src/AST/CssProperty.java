@@ -1,8 +1,12 @@
 package AST;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class CssProperty {
     //css Colon cssValue operators
     Css css;
-    CssValue cssValue;
+    List<CssValue> cssValue=new ArrayList<CssValue>();
 
     public Css getCss() {
         return css;
@@ -12,11 +16,11 @@ public class CssProperty {
         this.css = css;
     }
 
-    public CssValue getCssValue() {
+    public List<CssValue> getCssValue() {
         return cssValue;
     }
 
-    public void setCssValue(CssValue cssValue) {
+    public void setCssValue(List<CssValue> cssValue) {
         this.cssValue = cssValue;
     }
 

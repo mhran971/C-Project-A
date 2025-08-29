@@ -1,12 +1,9 @@
-
 package SemanticError;
 import SymbolTable.Scope.GlobalScope;
 import SymbolTable.Symbol.Symbol;
 import app.SemanticCheck;
 import org.antlr.v4.runtime.ParserRuleContext;
 import SymbolTable.SymbolTable;
-
-
 public class BindingChecker {
 
     public static void checkBinding(String value, ParserRuleContext ctx, SymbolTable symbolTable) {

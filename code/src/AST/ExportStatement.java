@@ -4,10 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExportStatement implements Statement {
-    //Export keyword declarationName LeftBrace classBody* RightBrace
+    //Export keyword declarationName (Implements OnInit)? LeftBrace classBody* RightBrace
     Keyword keyword;
     DeclarationName declarationName;
     List<ClassBody> classBody=new ArrayList< ClassBody>();
+    String Implements;
+    String OnInit;
+
+    @Override
+    public ExportStatement getExportStatement() {
+        return this;
+    }
 
     public Keyword getKeyword() {
         return keyword;
@@ -32,6 +39,22 @@ public class ExportStatement implements Statement {
 
     public void setClassBody(List<ClassBody> classBody) {
         this.classBody = classBody;
+    }
+
+    public String getImplements() {
+        return Implements;
+    }
+
+    public void setImplements(String anImplements) {
+        Implements = anImplements;
+    }
+
+    public String getOnInit() {
+        return OnInit;
+    }
+
+    public void setOnInit(String onInit) {
+        OnInit = onInit;
     }
 
     @Override

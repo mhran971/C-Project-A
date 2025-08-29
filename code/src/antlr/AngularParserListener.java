@@ -1,4 +1,4 @@
-// Generated from E:/Fourth year/Semester2(2024-2025)/Compiler 2/ProjectCompiler2/code/src/antlr/AngularParser.g4 by ANTLR 4.13.2
+// Generated from E:/Fourth year/Semester2(2024-2025)/Compiler 2/ProjectCompiler2_git/Compiler-Project-Angular/code/src/antlr/AngularParser.g4 by ANTLR 4.13.2
 package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -426,6 +426,54 @@ public interface AngularParserListener extends ParseTreeListener {
 	 */
 	void exitMethodOnly(AngularParser.MethodOnlyContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code FunctionNgOnInitTable}
+	 * labeled alternative in {@link AngularParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionNgOnInitTable(AngularParser.FunctionNgOnInitTableContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FunctionNgOnInitTable}
+	 * labeled alternative in {@link AngularParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionNgOnInitTable(AngularParser.FunctionNgOnInitTableContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code FunctionDeleteProduct}
+	 * labeled alternative in {@link AngularParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionDeleteProduct(AngularParser.FunctionDeleteProductContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FunctionDeleteProduct}
+	 * labeled alternative in {@link AngularParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionDeleteProduct(AngularParser.FunctionDeleteProductContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ConstructorLable}
+	 * labeled alternative in {@link AngularParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstructorLable(AngularParser.ConstructorLableContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ConstructorLable}
+	 * labeled alternative in {@link AngularParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstructorLable(AngularParser.ConstructorLableContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code FunctionAddProduct}
+	 * labeled alternative in {@link AngularParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionAddProduct(AngularParser.FunctionAddProductContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FunctionAddProduct}
+	 * labeled alternative in {@link AngularParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionAddProduct(AngularParser.FunctionAddProductContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AngularParser#propertyList}.
 	 * @param ctx the parse tree
 	 */
@@ -525,6 +573,240 @@ public interface AngularParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStatementMethod(AngularParser.StatementMethodContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#functionNgOnInit}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionNgOnInit(AngularParser.FunctionNgOnInitContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#functionNgOnInit}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionNgOnInit(AngularParser.FunctionNgOnInitContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#bodyNgOnInit}.
+	 * @param ctx the parse tree
+	 */
+	void enterBodyNgOnInit(AngularParser.BodyNgOnInitContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#bodyNgOnInit}.
+	 * @param ctx the parse tree
+	 */
+	void exitBodyNgOnInit(AngularParser.BodyNgOnInitContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#ifStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfStatement(AngularParser.IfStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#ifStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfStatement(AngularParser.IfStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#expressionIf}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressionIf(AngularParser.ExpressionIfContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#expressionIf}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressionIf(AngularParser.ExpressionIfContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BlockIfJSON}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlockIfJSON(AngularParser.BlockIfJSONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BlockIfJSON}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlockIfJSON(AngularParser.BlockIfJSONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BlockIfFilter}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlockIfFilter(AngularParser.BlockIfFilterContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BlockIfFilter}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlockIfFilter(AngularParser.BlockIfFilterContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BlockIfElse}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlockIfElse(AngularParser.BlockIfElseContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BlockIfElse}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlockIfElse(AngularParser.BlockIfElseContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BlockIfLocalStorage}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlockIfLocalStorage(AngularParser.BlockIfLocalStorageContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BlockIfLocalStorage}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlockIfLocalStorage(AngularParser.BlockIfLocalStorageContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BlockIfNullLiteral}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlockIfNullLiteral(AngularParser.BlockIfNullLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BlockIfNullLiteral}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlockIfNullLiteral(AngularParser.BlockIfNullLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BlockIfEllipsis}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlockIfEllipsis(AngularParser.BlockIfEllipsisContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BlockIfEllipsis}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlockIfEllipsis(AngularParser.BlockIfEllipsisContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BlockIfTable}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlockIfTable(AngularParser.BlockIfTableContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BlockIfTable}
+	 * labeled alternative in {@link AngularParser#blockIf}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlockIfTable(AngularParser.BlockIfTableContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#contentJSON}.
+	 * @param ctx the parse tree
+	 */
+	void enterContentJSON(AngularParser.ContentJSONContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#contentJSON}.
+	 * @param ctx the parse tree
+	 */
+	void exitContentJSON(AngularParser.ContentJSONContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#contentFilter}.
+	 * @param ctx the parse tree
+	 */
+	void enterContentFilter(AngularParser.ContentFilterContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#contentFilter}.
+	 * @param ctx the parse tree
+	 */
+	void exitContentFilter(AngularParser.ContentFilterContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#filterArrow}.
+	 * @param ctx the parse tree
+	 */
+	void enterFilterArrow(AngularParser.FilterArrowContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#filterArrow}.
+	 * @param ctx the parse tree
+	 */
+	void exitFilterArrow(AngularParser.FilterArrowContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#contentLocalStorage}.
+	 * @param ctx the parse tree
+	 */
+	void enterContentLocalStorage(AngularParser.ContentLocalStorageContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#contentLocalStorage}.
+	 * @param ctx the parse tree
+	 */
+	void exitContentLocalStorage(AngularParser.ContentLocalStorageContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#elseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterElseStatement(AngularParser.ElseStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#elseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitElseStatement(AngularParser.ElseStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#contentElse}.
+	 * @param ctx the parse tree
+	 */
+	void enterContentElse(AngularParser.ContentElseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#contentElse}.
+	 * @param ctx the parse tree
+	 */
+	void exitContentElse(AngularParser.ContentElseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#functionDelete}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionDelete(AngularParser.FunctionDeleteContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#functionDelete}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionDelete(AngularParser.FunctionDeleteContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#functionDeleteContent}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionDeleteContent(AngularParser.FunctionDeleteContentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#functionDeleteContent}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionDeleteContent(AngularParser.FunctionDeleteContentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#constructor}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstructor(AngularParser.ConstructorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#constructor}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstructor(AngularParser.ConstructorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#functionAdd}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionAdd(AngularParser.FunctionAddContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#functionAdd}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionAdd(AngularParser.FunctionAddContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#functionAddContent}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionAddContent(AngularParser.FunctionAddContentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#functionAddContent}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionAddContent(AngularParser.FunctionAddContentContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ParameterTyped}
 	 * labeled alternative in {@link AngularParser#declarationString}.
@@ -647,6 +929,42 @@ public interface AngularParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitHtmlContentBrace(AngularParser.HtmlContentBraceContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code HtmlButton}
+	 * labeled alternative in {@link AngularParser#htmlElementContent}.
+	 * @param ctx the parse tree
+	 */
+	void enterHtmlButton(AngularParser.HtmlButtonContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code HtmlButton}
+	 * labeled alternative in {@link AngularParser#htmlElementContent}.
+	 * @param ctx the parse tree
+	 */
+	void exitHtmlButton(AngularParser.HtmlButtonContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code DeclarationNumber}
+	 * labeled alternative in {@link AngularParser#htmlElementContent}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeclarationNumber(AngularParser.DeclarationNumberContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code DeclarationNumber}
+	 * labeled alternative in {@link AngularParser#htmlElementContent}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeclarationNumber(AngularParser.DeclarationNumberContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code DeclarationNgModel}
+	 * labeled alternative in {@link AngularParser#htmlElementContent}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeclarationNgModel(AngularParser.DeclarationNgModelContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code DeclarationNgModel}
+	 * labeled alternative in {@link AngularParser#htmlElementContent}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeclarationNgModel(AngularParser.DeclarationNgModelContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code HtmlImgAttribute1}
 	 * labeled alternative in {@link AngularParser#contentHtml}.

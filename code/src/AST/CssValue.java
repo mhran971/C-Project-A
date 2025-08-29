@@ -88,6 +88,19 @@ public class CssValue {
         this.STRING = STRING;
     }
 
+    public String getName() {
+        if ( Row != null) return Row;
+        if (Flex != null) return Flex;
+        if (Border_Box != null) return Border_Box;
+        if (Center != null) return Center;
+        if (Column != null) return Column;
+        if (Auto != null) return Auto;
+        if (Pointer != null) return Pointer;
+        if (HEXCHAR != null) return HEXCHAR;
+        if (STRING != null) return STRING;
+        return "";
+    }
+
     @Override
     public String toString() {
         if(decimalLiteral_UNIT !=null){

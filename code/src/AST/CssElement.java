@@ -10,6 +10,11 @@ public class CssElement implements Statement{
     List<Selector> selector=new ArrayList<Selector>();
     List<CssProperty> cssProperty=new ArrayList<CssProperty>();
 
+    @Override
+    public CssElement getCssElement() {
+        return this;
+    }
+
     public TagName getTagName() {
         return tagName;
     }

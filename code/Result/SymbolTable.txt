@@ -5,51 +5,58 @@ Scope: Interface Scope:
   Symbol → Name:name     , Type: string     , Value: N/A                 
   Symbol → Name:image    , Type: string     , Value: N/A                 
   Symbol → Name:details  , Type: string     , Value: N/A                 
-Scope: Interface Scope:
-  Symbol → Name:Item  , Type: interface  , Value: InterfaceAttributes:
-  Symbol → Name:id    , Type: number     , Value: N/A                 
 Scope: Component Scope:
-  Symbol → Name:Component    , Type: Component      , Value: ComponentOptions:          
-  Symbol → Name:imports      , Type: ReservedWord:  , Value: [RouterOutlet,CommonModule]
-  Symbol → Name:templateUrl  , Type: ReservedWord:  , Value: './app.component'          
-  Symbol → Name:styleUrls    , Type: ReservedWord:  , Value: './app.component'          
+  Symbol → Name:Component    , Type: Component      , Value: ComponentOptions:              
+  Symbol → Name:selector     , Type: ReservedWord:  , Value: 'app-product-page'             
+  Symbol → Name:imports      , Type: ReservedWord:  , Value: [CommonModule,RouterLink]      
+  Symbol → Name:templateUrl  , Type: ReservedWord:  , Value: './product-page.component.html'
+  Symbol → Name:styleUrls    , Type: ReservedWord:  , Value: './product-page.component.css' 
 Scope: Export Scope:
-  Symbol → Name:AppComponent  , Type: class    , Value: ClassBody:
-  Symbol → Name:products      , Type: Product  , Value: Products: 
+  Symbol → Name:ProductPageComponent  , Type: class    , Value: ClassBody:
+  Symbol → Name:defaultProducts       , Type: Product  , Value: Products: 
+  Symbol → Name:products              , Type: Product  , Value: Products: 
 Scope: Product:
-  Symbol → Name:id       , Type: string  , Value: 'Product one'                                                                   
-  Symbol → Name:name     , Type: string  , Value: <missing StringLiteral>                                                         
-  Symbol → Name:image    , Type: string  , Value: 'assets/food products.png'                                                      
-  Symbol → Name:details  , Type: string  , Value: 'لدينا أفضل النتجات الغذائية و بأفضل الاسعار من أفضل الماركات العالمية والمحلية'
+  Symbol → Name:id       , Type: string  , Value: 'Product one'                                                                            
+  Symbol → Name:name     , Type: string  , Value: 'food products'                                                                          
+  Symbol → Name:image    , Type: string  , Value: 'assets/food_products.png'                                                               
+  Symbol → Name:details  , Type: string  , Value: 'We have the best food products and sounds from the best international and local brands.'
 Scope: Product:
-  Symbol → Name:id       , Type: string  , Value: 'Product two'                                              
-  Symbol → Name:name     , Type: string  , Value: 'منتجات تجميلية'                                           
-  Symbol → Name:image    , Type: string  , Value: 'assets/cosmetic products.png'                             
-  Symbol → Name:details  , Type: string  , Value: 'أفضل أنواع العطورات والمنتجات التجميلية رائحة ونعومة معاً'
+  Symbol → Name:id       , Type: string  , Value: 'Product two'                                                               
+  Symbol → Name:name     , Type: string  , Value: 'cosmetic products'                                                         
+  Symbol → Name:image    , Type: string  , Value: 'assets/cosmetic_products.png'                                              
+  Symbol → Name:details  , Type: string  , Value: 'The best types of perfumes and cosmetic products, both fragrant and soft.ً'
 Scope: Product:
-  Symbol → Name:id       , Type: string  , Value: 'Product three'                               
-  Symbol → Name:name     , Type: string  , Value: 'بيتزا الكوخ'                                 
-  Symbol → Name:image    , Type: string  , Value: 'assets/pizza.png'                            
-  Symbol → Name:details  , Type: string  , Value: 'بيتزا خضار مع الدجاج جميع الاحجام وحسب الطلب'
+  Symbol → Name:id       , Type: string  , Value: 'Product three'                                           
+  Symbol → Name:name     , Type: string  , Value: 'Hut Pizza'                                               
+  Symbol → Name:image    , Type: string  , Value: 'assets/pizza.png'                                        
+  Symbol → Name:details  , Type: string  , Value: 'Vegetable pizza with chicken, all sizes and upon request'
 Scope: Product:
-  Symbol → Name:id       , Type: string  , Value: 'Product four'              
-  Symbol → Name:name     , Type: string  , Value: 'سلطة خضار'                 
-  Symbol → Name:image    , Type: string  , Value: 'assets/salad.png'          
-  Symbol → Name:details  , Type: string  , Value: 'سلطات خضار مع الزيت البلدي'
+  Symbol → Name:id       , Type: string  , Value: 'Product four'                     
+  Symbol → Name:name     , Type: string  , Value: 'vegetable salad'                  
+  Symbol → Name:image    , Type: string  , Value: 'assets/salad.png'                 
+  Symbol → Name:details  , Type: string  , Value: 'Vegetable salads with country oil'
 Scope: Product:
-  Symbol → Name:id       , Type: string  , Value: <missing StringLiteral>                                                      
-  Symbol → Name:name     , Type: string  , Value: 'سندويش'                                                                     
-  Symbol → Name:image    , Type: string  , Value: 'assets/sandwich.png'                                                        
-  Symbol → Name:details  , Type: string  , Value: 'لدينا كل أنواع السندويش غربي وشرقي وجاهزون لكافة الطلبات أهلا بكم في مطعمكم'
+  Symbol → Name:id       , Type: string  , Value: 'Product five'                                                                                                      
+  Symbol → Name:name     , Type: string  , Value: 'sandwich'                                                                                                          
+  Symbol → Name:image    , Type: string  , Value: 'assets/sandwich.png'                                                                                               
+  Symbol → Name:details  , Type: string  , Value: 'We have all kinds of sandwiches, Western and Eastern, and we are ready for all orders. Welcome to your restaurant.'
 Scope: Product:
-  Symbol → Name:id       , Type: string  , Value: 'Product Six'                 
-  Symbol → Name:name     , Type: string  , Value: 'حساء'                        
-  Symbol → Name:image    , Type: string  , Value: 'assets/soup.png'             
-  Symbol → Name:details  , Type: string  , Value: 'حساء بجميع أنواعه وحسب الطلب'
+  Symbol → Name:id       , Type: string  , Value: 'Product Six'                       
+  Symbol → Name:name     , Type: string  , Value: 'soup'                              
+  Symbol → Name:image    , Type: string  , Value: 'assets/soup.png'                   
+  Symbol → Name:details  , Type: string  , Value: 'Soup of all kinds and upon request'
 Scope: Method Scope:
   Symbol → Name:selectProduct  , Type: Function  , Value: product:Product
 Scope: Method Scope:
-  Symbol → Name:selectProduct  , Type: Function  , Value: N/A  
+  Symbol → Name:saved         , Type: const     , Value: JSON.parse  
+  Symbol → Name:validSaved    , Type: const     , Value: saved.filter
+  Symbol → Name:ngOnInit      , Type: Function  , Value: void        
+  Symbol → Name:currentSaved  , Type: const     , Value: JSON.parse  
+  Symbol → Name:UpdatedSaved  , Type: const     , Value: saved.filter
+Scope: HTML div:
+  Symbol → Name:div   , Type: N/A   , Value: N/A  
+Scope: HTML div:
+  Symbol → Name:div   , Type: N/A   , Value: N/A  
 Scope: HTML div:
   Symbol → Name:div   , Type: class  , Value: 'container'
 Scope: HTML div:
@@ -64,3 +71,5 @@ Scope: div Img:
   Symbol → Name:src    , Type: N/A   , Value: 'product.image'
   Symbol → Name:alt    , Type: N/A   , Value: 'صورة المنتج'  
   Symbol → Name:class  , Type: N/A   , Value: 'product-image'
+Scope: HTML div:
+  Symbol → Name:div   , Type: N/A   , Value: N/A  

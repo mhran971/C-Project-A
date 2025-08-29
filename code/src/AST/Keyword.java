@@ -221,6 +221,33 @@ public class Keyword {
         NullLiteral = nullLiteral;
     }
 
+    public String getName() {
+        if (Break != null) return Break;
+        if (Do != null) return Do;
+        if (Case != null) return Case;
+        if (Else != null) return Else;
+        if (New != null) return New;
+        if (Return != null) return Return;
+        if (Void != null) return Void;
+        if (Continue != null) return Continue;
+        if (For != null) return For;
+        if (Switch != null) return Switch;
+        if (While != null) return While;
+        if (Function_ != null) return Function_;
+        if (This != null) return This;
+        if (Default != null) return Default;
+        if (If != null) return If;
+        if (In != null) return In;
+        if (Const != null) return Const;
+        if (Export != null) return Export;
+        if (Import != null) return Import;
+        if (Let != null) return Let;
+        if (Interface != null) return Interface;
+        if (Extends != null) return Extends;
+        if (Clas != null) return Clas;
+        if (NullLiteral != null) return NullLiteral;
+        return "";
+    }
 
 
     @Override

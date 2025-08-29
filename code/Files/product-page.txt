@@ -1,0 +1,181 @@
+////////////////TypeScript/////////////
+
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+
+interface Product {
+  id: string;
+  name: string;
+  image: string;
+  details: string;
+}
+
+
+@Component({
+  selector: 'app-product-page',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
+  templateUrl: './product-page.component.html',
+  styleUrls: ['./product-page.component.css']
+})
+export class ProductPageComponent implements OnInit {
+  defaultProducts: Product[] = [
+    {
+      id: 'Product one',
+      name: 'food products',
+      image: 'assets/food_products.png',
+      details: 'We have the best food products and sounds from the best international and local brands.',
+    },
+    {
+      id: 'Product two',
+      name: 'cosmetic products',
+      image: 'assets/cosmetic_products.png',
+      details: 'The best types of perfumes and cosmetic products, both fragrant and soft.ً',
+    },
+    {
+      id: 'Product three',
+      name: 'Hut Pizza',
+      image: 'assets/pizza.png',
+      details: 'Vegetable pizza with chicken, all sizes and upon request',
+    },
+    {
+      id: 'Product four',
+      name: 'vegetable salad',
+      image: 'assets/salad.png',
+      details: 'Vegetable salads with country oil',
+    },
+    {
+      id: 'Product five',
+      name: 'sandwich',
+      image: 'assets/sandwich.png',
+      details: 'We have all kinds of sandwiches, Western and Eastern, and we are ready for all orders. Welcome to your restaurant.',
+    },
+    {
+      id: 'Product Six',
+      name: 'soup',
+      image: 'assets/soup.png',
+      details: 'Soup of all kinds and upon request',
+    },
+  ];
+
+  products: Product[] = [];
+  selectedProduct: Product | null = null;
+    selectProduct(product: Product) {
+      this.selectedProduct = product;
+    }
+
+
+  ngOnInit(): void {
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    const saved = JSON.parse(localStorage.getItem('products') || '[]');
+    const validSaved = saved.filter((pp: any) => pp?.id && pp?.name && pp?.image && pp?.details);
+    this.products = [...this.defaultProducts, ...validSaved];
+  } else {
+    this.products = [...this.defaultProducts];
+  }
+}
+
+
+
+  deleteProduct(index: number) {
+  const removed = this.products.splice(index, 1)[0];
+
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    const currentSaved = JSON.parse(localStorage.getItem('products') || '[]');
+    const UpdatedSaved = currentSaved.filter((pp: any) => pp.id !== removed.id);
+    localStorage.setItem('products', JSON.stringify( UpdatedSaved));
+  }
+
+  if (this.selectedProduct?.id === removed.id) {
+    this.selectedProduct = null;
+  }
+}
+
+}
+/////////////////HTML////////////////
+
+<div>
+ <button routerLink='/add' class='add-button'>Add New Product</button>
+  <div class='container'>
+    <div class='main-product'>
+      <h3>{{ selectedProduct?.id }}</h3>
+      <h3>{{ selectedProduct?.name }}</h3>
+      <img
+        *ngIf='selectedProduct'
+        [src]='selectedProduct.image'
+        alt='صورة المنتج'
+        class='product-image'
+      />
+      <p>{{ selectedProduct?.details }}</p>
+    </div>
+
+    <div class='side-products'>
+      <div
+        class='side-product'
+        *ngFor='let product of products; let i = index'
+        (click)='selectProduct(product)'
+      >
+        <h4>{{ product.name }}</h4>
+        <img [src]='product.image' alt='صورة المنتج' class='product-image' />
+      <button (click)='deleteProduct(i); $event.stopPropagation()' class='delete-button' > Delete </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+///////////////////////////////CSS
+
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.main-product {
+  flex: 3;
+  border: 1px solid #000;
+  padding: 10px;
+  text-align: center;
+}
+
+.main-product img {
+  max-width: 100%;
+  height: auto;
+}
+
+.side-products {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.side-product {
+  border: 1px solid #000;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.side-product:hover {
+  background-color: #f0f0f0;
+}
+
+.side-product img {
+  max-width: 80%;
+  height: auto;
+  margin: 10px ;
+}
+
+h3, h4 {
+  margin: 5px ;
+}
+
+p {
+  margin: 0;
+}

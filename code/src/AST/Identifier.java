@@ -5,6 +5,7 @@ public class Identifier implements ComponentOption{
     String True_;
     String Or;
 
+
     public String getIdentifier() {
         return Identifier;
     }

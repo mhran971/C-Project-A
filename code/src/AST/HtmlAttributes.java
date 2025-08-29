@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HtmlAttributes implements Elements {
-    //tagName STRING (tagName STRING)? tagName
+    //(tagName (STRING)?)*
     List<TagName> tagName=new ArrayList<TagName>();
     List<String>STRING=new ArrayList<String>();
 
@@ -27,8 +27,15 @@ public class HtmlAttributes implements Elements {
 
     @Override
     public String toString() {
+        if (STRING!=null){
+            return "htmlAttributes=" +
+                    '\n'+"tagName =" +tagName +
+                    '\n'+"STRING=" + STRING
+                    ;
+
+        }
         return "htmlAttributes=" +
-                '\n'+"STRING=" + STRING + '\n'
-                ;
+                '\n'+"tagName =" +tagName
+        ;
     }
 }

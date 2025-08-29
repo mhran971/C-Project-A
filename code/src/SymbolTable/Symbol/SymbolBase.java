@@ -1,7 +1,6 @@
 package SymbolTable.Symbol;
 import SymbolTable.Scope.Scope;
 
-
 public class SymbolBase implements Symbol{
 
     private String name;
@@ -51,7 +50,6 @@ public class SymbolBase implements Symbol{
     @Override
     public void setInsertionOrderNumber(int i) {
         this.insertionOrderNumber = i;
-
     }
 
     @Override
@@ -62,5 +60,4 @@ public class SymbolBase implements Symbol{
                 " , type='" + type + '\'' +
                 '}';
     }
-
 }

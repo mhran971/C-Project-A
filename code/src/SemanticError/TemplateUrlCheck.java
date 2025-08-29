@@ -1,12 +1,10 @@
 package SemanticError;
-
 import SymbolTable.Scope.GlobalScope;
 import SymbolTable.Symbol.Symbol;
 import SymbolTable.Symbol.SymbolBase;
 import SymbolTable.SymbolTable;
 import app.SemanticCheck;
 import org.antlr.v4.runtime.ParserRuleContext;
-
 
 public class TemplateUrlCheck {
     public static void checkTemplateUrl(SymbolTable symbolTable, ParserRuleContext ctx) {

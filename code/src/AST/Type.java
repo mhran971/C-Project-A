@@ -9,6 +9,7 @@ public class Type implements PropertyDeclaration,DeclarationString {
     String Var;
     String Array;
     String Number;
+    String Private;
 
     public String getString() {
         return string;
@@ -74,6 +75,27 @@ public class Type implements PropertyDeclaration,DeclarationString {
         Number = number;
     }
 
+    public String getPrivate() {
+        return Private;
+    }
+
+    public void setPrivate(String aPrivate) {
+        Private = aPrivate;
+    }
+
+    public String getName() {
+        if (string != null) return string;
+        if (Int != null) return Int;
+        if (Float != null) return Float;
+        if (Double != null) return Double;
+        if (Bool != null) return Bool;
+        if (Var != null) return Var;
+        if (Array != null) return Array;
+        if (Number != null) return Number;
+        if (Private != null) return Private;
+        return "";
+    }
+
     @Override
     public String toString() {
         if(string!=null){
@@ -96,6 +118,9 @@ public class Type implements PropertyDeclaration,DeclarationString {
         }
         else if(Array!=null){
             return "type=" + Array + '\n' ;
+        }
+        else if(Private!=null){
+            return "type=" + Private + '\n' ;
         }
         return "type=" +Number + '\n' ;
 
